@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="content has-text-centered">
+  <h2>Webcams</h2>
+  <p>Reloaded at: <span id="datetime"></span></p>
+  <figure>
+    <p>
+      {% for tag, fname in cams.items() %}
+      <img src="{{ url_for('webcam_download', filename=fname) }}" alt="{{ tag }}" id="{{ tag }}">
+      {% endfor %}
+    </p>
+  </figure>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    (function() {
+        var dateElem = document.getElementById('datetime');
+        dateElem.innerHTML = new Date();
+        setInterval(function() {
+          t = new Date();
+          {% for tag, fname in cams.items() %}
+          document.getElementById('{{ tag }}').src = '{{ url_for("webcam_download", filename=fname) }}?t=' + t.getTime();
+          {% endfor %}
+          dateElem.innerHTML = t;
+        }, 30000);
+    })();
+</script>
+{% endblock %}

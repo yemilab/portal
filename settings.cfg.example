@@ -1,0 +1,5 @@
+DEBUG = False
+TESTING = False
+SECRET_KEY = 'dev'
+UPLOAD_FOLDER = '/uploads'
+MAX_CONTENT_PATH = 104857600
